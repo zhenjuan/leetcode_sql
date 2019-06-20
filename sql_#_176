@@ -1,0 +1,34 @@
+Solution 1 (171ms):
+Select if(count(*) < 2, null, min(s.Salary)) as SecondHighestSalary
+from 
+(select distinct Salary from Employee order by Salary desc limit 0,2) as s
+;
+
+
+Solution 2 (133 ms):
+SELECT DISTINCT
+    Salary AS SecondHighestSalary
+FROM
+    Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1
+;
+
+Solution 3 :
+select if(count(*)<2, null,min(a.Salary)) SecondHighestSalary
+from
+(select distinct Salary
+from Employee 
+order by Salary desc 
+limit 2 ) a
+;
+
+Solution 3 (190 ms):
+select if(count(*)<2, null,min(a.Salary)) SecondHighestSalary
+from
+(select Salary
+from Employee 
+group by Salary
+order by Salary desc 
+limit 2 ) a
+;
