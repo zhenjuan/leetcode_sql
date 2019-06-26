@@ -1,0 +1,22 @@
+solution 1 (248 ms)
+SELECT Score,`Rank`
+FROM 
+(
+/*Group and Count s2.score*/
+SELECT s1.Id,s1.Score, COUNT(s2.score) AS `Rank`
+FROM Scores s1
+/*s1 join with s2  on the condition s1.Score <= s2.Score.
+It gets the number of s2.Score that are great and equal than s1.Score.
+*/
+JOIN
+(
+/*get score rank descending as temporary table s2*/
+SELECT DISTINCT Score
+FROM Scores
+ORDER BY Score DESC
+) AS s2 
+ON (s1.Score <= s2.Score)
+GROUP BY s1.Id,s1.Score
+) AS result
+ORDER BY Score DESC
+;
